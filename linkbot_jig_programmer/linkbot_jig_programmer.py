@@ -171,6 +171,10 @@ class StartQT4(QtGui.QMainWindow):
         # Multiply progress by 200 because we will not be doing verification
         self.ui.progressBar.setValue(self.programmer.getProgress()*200)
         if not self.programmer.isProgramming():
+            if self.programmer.getLastException() is not None:
+              QtGui.QMessageBox.warning(self, "Programming Exception",
+                str(self.programmer.getLastException()))
+
             self.progressTimer.stop()
             linkbot._linkbot.cycleDongle(1)
             if self.autoTest:
