@@ -93,9 +93,12 @@ class StartQT4(QtGui.QMainWindow):
         self.ui.flash_pushButton.clicked.connect(self.startProgramming)
         self.ui.test_pushButton.clicked.connect(self.runTest)
         #self.ui.flashtest_pushButton.clicked.connect(self.flashAndTest)
+        self.ui.checkBox_autoFlash.stateChanged.connect(self.processCheckButton)
         self.ui.progressBar.setValue(0)
         self.progressTimer = QtCore.QTimer(self)
         self.progressTimer.timeout.connect(self.updateProgress)
+        self.progressTimerSilent = QtCore.QTimer(self)
+        self.progressTimerSilent.timeout.connect(self.updateProgressSilent)
         self.autoTest = False
 
     def robotIdChanged(self, text):
@@ -147,6 +150,20 @@ class StartQT4(QtGui.QMainWindow):
             '. ' + str(e))
           traceback.print_exc()
           return
+
+    def startProgrammingSilent(self):
+        print('Trying to start programming...')
+        serialPort = self.ui.comport_comboBox.currentText()
+        firmwareFile = self.ui.firmwareversion_comboBox.currentText()+'.hex'
+        self.programmer = stk.ATmega128rfa1Programmer(serialPort)
+        
+        # Generate a random ID for the new board
+        self.serialID = "{:04d}".format(random.randint(1000, 9999))
+        self.programmer.serialID = self.serialID
+        self.programmer.programAll( 
+                                    hexfiles=[firmwareFile, bootloader_file],
+                                    verify=False
+                                  )
     
     def runTest(self):
         self.disableButtons()
@@ -155,6 +172,18 @@ class StartQT4(QtGui.QMainWindow):
         testThread.threadFinished.connect(self.testFinished)
         testThread.threadException.connect(self.testException)
         testThread.start()
+
+    def processCheckButton(self, enabled):
+        if enabled:
+            self.disableButtons()
+            # Start the listening thread
+            self.listenThread = AutoProgramThread(self)
+            self.listenThread.is_alive = True
+            self.listenThread.start()
+        else:
+            self.listenThread.is_alive = False
+            self.listenThread.wait()
+            self.enableButtons()
 
     def flashAndTest(self):
         self.autoTest = True
@@ -188,6 +217,13 @@ class StartQT4(QtGui.QMainWindow):
             else:
                 self.enableButtons()
             self.autoTest = False
+
+    def updateProgressSilent(self):
+        # Multiply progress by 200 because we will not be doing verification
+        try:
+            self.ui.progressBar.setValue(self.programmer.getProgress()*200)
+        except:
+            pass
 
 class RobotTestThread(QtCore.QThread):
     threadFinished = QtCore.pyqtSignal()
@@ -226,6 +262,46 @@ class RobotTestThread(QtCore.QThread):
         except Exception as e:
             self.threadException.emit(e)
         self.threadFinished.emit()
+
+class AutoProgramThread(QtCore.QThread):
+    threadFinished = QtCore.pyqtSignal()
+    threadException = QtCore.pyqtSignal(Exception)
+
+    IDLE = 0
+    DONE_PROGRAMMING = 1
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.is_active = True
+        self._main_window = parent
+        self.state = self.IDLE
+        self._main_window.progressTimerSilent.start(1000)
+
+    def run(self):
+        while self.is_active:
+            if self.state == self.IDLE:
+                self.idle()
+            elif self.state == self.DONE_PROGRAMMING:
+                self.done_programming()
+
+    def idle(self):
+        try:
+            self._main_window.startProgrammingSilent()
+            self.state = self.DONE_PROGRAMMING
+            print('Done programming.')
+        except Exception as e:
+            print('Caught exception: ', str(e), 'Trying again...')
+            time.sleep(1)
+
+    def done_programming(self):
+        try:
+            print('Trying sign-on...')
+            self._main_window.programmer.check_signature()
+            time.sleep(1)
+            print('Success.')
+        except:
+            self.state = self.IDLE
+
 
 def main():
     app = QtGui.QApplication(sys.argv)
