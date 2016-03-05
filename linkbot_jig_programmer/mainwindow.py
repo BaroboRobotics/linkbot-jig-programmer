@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created: Mon Feb 29 11:58:29 2016
+# Created: Fri Mar  4 16:13:03 2016
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(480, 497)
+        MainWindow.resize(441, 406)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -47,10 +47,9 @@ class Ui_MainWindow(object):
         self.comport_comboBox = QtGui.QComboBox(self.groupBox)
         self.comport_comboBox.setObjectName(_fromUtf8("comport_comboBox"))
         self.verticalLayout.addWidget(self.comport_comboBox)
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem)
         self.gridLayout_2.addWidget(self.groupBox, 0, 0, 1, 1)
         self.groupBox_2 = QtGui.QGroupBox(self.centralwidget)
+        self.groupBox_2.setMaximumSize(QtCore.QSize(16777215, 600))
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox_2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
@@ -58,10 +57,9 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.verticalLayout_3.addWidget(self.label_2)
         self.firmwareversion_comboBox = QtGui.QComboBox(self.groupBox_2)
+        self.firmwareversion_comboBox.setMaximumSize(QtCore.QSize(600, 16777215))
         self.firmwareversion_comboBox.setObjectName(_fromUtf8("firmwareversion_comboBox"))
         self.verticalLayout_3.addWidget(self.firmwareversion_comboBox)
-        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem1)
         self.gridLayout_2.addWidget(self.groupBox_2, 1, 0, 1, 1)
         self.groupBox_3 = QtGui.QGroupBox(self.centralwidget)
         self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
@@ -92,7 +90,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.checkBox_autoFlash, 3, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 480, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 441, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuAoeu = QtGui.QMenu(self.menubar)
         self.menuAoeu.setObjectName(_fromUtf8("menuAoeu"))
