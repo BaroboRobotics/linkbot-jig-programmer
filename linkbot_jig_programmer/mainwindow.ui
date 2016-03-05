@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
-    <height>406</height>
+    <width>335</width>
+    <height>324</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,6 +23,11 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
       <property name="title">
        <string>Com Port</string>
       </property>
@@ -30,10 +35,27 @@
        <bool>false</bool>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Select the COM Port that the programmer is connected to.</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
          </property>
         </widget>
        </item>
@@ -51,12 +73,31 @@
         <height>600</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
       <property name="title">
        <string>Firmware Version</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Select the firmware version to flash. </string>
          </property>
@@ -77,12 +118,31 @@
     </item>
     <item row="2" column="0">
      <widget class="QGroupBox" name="groupBox_3">
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
       <property name="title">
        <string>Testing</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Enter a remote robot's Serial ID to ping:</string>
          </property>
@@ -98,6 +158,11 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="flash_pushButton">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Flash</string>
         </property>
@@ -105,6 +170,11 @@
       </item>
       <item>
        <widget class="QPushButton" name="test_pushButton">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Test</string>
         </property>
@@ -121,6 +191,11 @@
     </item>
     <item row="3" column="0">
      <widget class="QCheckBox" name="checkBox_autoFlash">
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Enable Auto-Flash</string>
       </property>
@@ -133,7 +208,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>441</width>
+     <width>335</width>
      <height>25</height>
     </rect>
    </property>
