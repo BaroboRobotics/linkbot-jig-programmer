@@ -174,7 +174,6 @@ class StartQT4(QtGui.QMainWindow):
         testThread.start()
 
     def processCheckButton(self, enabled):
-        print('Process check button.')
         if enabled:
             self.disableButtons()
             # Start the listening thread
@@ -199,7 +198,10 @@ class StartQT4(QtGui.QMainWindow):
 
     def updateProgress(self):
         # Multiply progress by 200 because we will not be doing verification
-        self.ui.progressBar.setValue(self.programmer.getProgress()*200)
+        progress = self.programmer.getProgress()*200
+        if progress > 100:
+            progress = 100
+        self.ui.progressBar.setValue(progress)
         if not self.programmer.isProgramming():
             if self.programmer.getLastException() is not None:
               QtGui.QMessageBox.warning(self, "Programming Exception",
@@ -222,7 +224,10 @@ class StartQT4(QtGui.QMainWindow):
     def updateProgressSilent(self):
         # Multiply progress by 200 because we will not be doing verification
         try:
-            self.ui.progressBar.setValue(self.programmer.getProgress()*200)
+            progress = self.programmer.getProgress()*200
+            if progress > 100:
+                progress = 100
+            self.ui.progressBar.setValue(progress)
         except:
             pass
 
