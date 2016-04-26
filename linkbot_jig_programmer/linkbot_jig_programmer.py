@@ -174,14 +174,15 @@ class StartQT4(QtGui.QMainWindow):
         testThread.start()
 
     def processCheckButton(self, enabled):
+        print('Process check button.')
         if enabled:
             self.disableButtons()
             # Start the listening thread
             self.listenThread = AutoProgramThread(self)
-            self.listenThread.is_alive = True
+            self.listenThread.is_active = True
             self.listenThread.start()
         else:
-            self.listenThread.is_alive = False
+            self.listenThread.is_active = False
             self.listenThread.wait()
             self.enableButtons()
 
