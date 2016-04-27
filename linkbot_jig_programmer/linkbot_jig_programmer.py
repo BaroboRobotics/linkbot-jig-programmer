@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 
 import sys
 from PyQt4 import QtCore, QtGui
@@ -178,10 +178,10 @@ class StartQT4(QtGui.QMainWindow):
             self.disableButtons()
             # Start the listening thread
             self.listenThread = AutoProgramThread(self)
-            self.listenThread.is_alive = True
+            self.listenThread.is_active = True
             self.listenThread.start()
         else:
-            self.listenThread.is_alive = False
+            self.listenThread.is_active = False
             self.listenThread.wait()
             self.enableButtons()
 
@@ -198,7 +198,10 @@ class StartQT4(QtGui.QMainWindow):
 
     def updateProgress(self):
         # Multiply progress by 200 because we will not be doing verification
-        self.ui.progressBar.setValue(self.programmer.getProgress()*200)
+        progress = self.programmer.getProgress()*200
+        if progress > 100:
+            progress = 100
+        self.ui.progressBar.setValue(progress)
         if not self.programmer.isProgramming():
             if self.programmer.getLastException() is not None:
               QtGui.QMessageBox.warning(self, "Programming Exception",
@@ -221,7 +224,10 @@ class StartQT4(QtGui.QMainWindow):
     def updateProgressSilent(self):
         # Multiply progress by 200 because we will not be doing verification
         try:
-            self.ui.progressBar.setValue(self.programmer.getProgress()*200)
+            progress = self.programmer.getProgress()*200
+            if progress > 100:
+                progress = 100
+            self.ui.progressBar.setValue(progress)
         except:
             pass
 
