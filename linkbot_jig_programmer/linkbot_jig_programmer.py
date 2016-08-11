@@ -8,7 +8,7 @@ try:
     from linkbot_jig_programmer.mainwindow import Ui_MainWindow
 except:
     from mainwindow import Ui_MainWindow
-import linkbot
+import linkbot3 as linkbot
 import time
 import glob
 import threading
@@ -100,6 +100,7 @@ class StartQT4(QtGui.QMainWindow):
         self.progressTimerSilent = QtCore.QTimer(self)
         self.progressTimerSilent.timeout.connect(self.updateProgressSilent)
         self.autoTest = False
+        self.daemon = linkbot.Daemon()
 
     def robotIdChanged(self, text):
         if len(text) == 4:
@@ -208,7 +209,7 @@ class StartQT4(QtGui.QMainWindow):
                 str(self.programmer.getLastException()))
 
             self.progressTimer.stop()
-            linkbot._linkbot.cycleDongle(1)
+            self.daemon.cycle(1)
             if self.autoTest:
                 self.runTest()
                 '''
@@ -244,7 +245,7 @@ class RobotTestThread(QtCore.QThread):
     def run(self):
         # Power the motors forward and backward
         try:
-            l = linkbot.Linkbot()
+            l = linkbot.CLinkbot()
             if l.getFormFactor() != 3:
                 l.setMotorPowers(255, 255, 255)
                 time.sleep(1)
@@ -259,7 +260,7 @@ class RobotTestThread(QtCore.QThread):
                     self.threadException.emit(
                         Exception("Accelerometer anomaly detected."))
 
-            testbot = linkbot.Linkbot(self.testBotId)
+            testbot = linkbot.CLinkbot(self.testBotId)
             print(testbot.getJointAngles())
             del testbot
             l.setBuzzerFrequency(220)

@@ -16,7 +16,7 @@ setup(
     entry_points = {
         "console_scripts": ['linkbot-jig-programmer=linkbot_jig_programmer.linkbot_jig_programmer:main']
     },
-    install_requires = ["PyLinkbot >= 2.3.4", 
+    install_requires = ["PyLinkbot3 >= 3.0.0", 
                         "pystk500v2 >= 2.3.2", 
                         "pyserial == 2.7",
                         "crc16", ],
