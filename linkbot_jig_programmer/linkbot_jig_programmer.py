@@ -100,7 +100,10 @@ class StartQT4(QtGui.QMainWindow):
         self.progressTimerSilent = QtCore.QTimer(self)
         self.progressTimerSilent.timeout.connect(self.updateProgressSilent)
         self.autoTest = False
-        self.daemon = linkbot.Daemon()
+        try:
+            self.daemon = linkbot.Daemon()
+        except:
+            self.daemon = None
 
     def robotIdChanged(self, text):
         if len(text) == 4:
@@ -209,7 +212,8 @@ class StartQT4(QtGui.QMainWindow):
                 str(self.programmer.getLastException()))
 
             self.progressTimer.stop()
-            self.daemon.cycle(1)
+            if self.daemon:
+                self.daemon.cycle(1)
             if self.autoTest:
                 self.runTest()
                 '''
